@@ -18,5 +18,10 @@
     "id": 4,
     "name": "Product 4 ",
     "price": "10000"
+  },
+  {
+    "id": 5,
+    "name": "Laptop ",
+    "price": "60000"
   }
 ]
