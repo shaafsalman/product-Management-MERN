@@ -35,21 +35,18 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-    if (searchTerm === '') {
-      setSearchResults(products);
-    } else {
-      const results = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchResults(results);
-    }
+    const results = products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
   };
+
   const showAdd = () => {
     setShowAddProduct(true);
+    fetchProducts();
   };
 
   const toggleAddProduct = () => {
-    fetchProducts();
     setShowAddProduct(!showAddProduct);
   };
 

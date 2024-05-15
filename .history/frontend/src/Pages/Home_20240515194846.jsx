@@ -35,9 +35,11 @@ const Home = () => {
   };
 
   const handleSearch = () => {
+    // If search term is empty, reset search results to display all products
     if (searchTerm === '') {
       setSearchResults(products);
     } else {
+      // Filter products based on search term
       const results = products.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );

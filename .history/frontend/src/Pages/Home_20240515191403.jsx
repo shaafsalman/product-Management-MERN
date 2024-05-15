@@ -35,21 +35,18 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-    if (searchTerm === '') {
-      setSearchResults(products);
-    } else {
-      const results = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchResults(results);
-    }
+    const results = products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
   };
+
   const showAdd = () => {
     setShowAddProduct(true);
+    fetchProducts();
   };
 
   const toggleAddProduct = () => {
-    fetchProducts();
     setShowAddProduct(!showAddProduct);
   };
 
@@ -82,59 +79,62 @@ const Home = () => {
     }
   };
 
+
+  
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
       {message && (
         <MessageCard Heading={message.Heading} Message={message.Message} onClose={() => setMessage(null)} />
       )}
       <div className="w-full max-w-screen-md bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-3xl font-bold mb-6 text-gray-600 text-center md:text-left">Product Management</h1>
-        <div className="flex flex-col md:flex-row items-center justify-between mb-6 space-y-4 md:space-y-0">
-          <div className="flex w-full md:w-auto">
+        <h1 className="text-3xl font-bold mb-6 text-gray-600">Product Management</h1>
+
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex">
             <input
               type="text"
               placeholder="Search products"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-red-950 w-full md:w-auto"
+              className="px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-red-950"
             />
             <button
               onClick={handleSearch}
-              className="px-4 py-2 bg-gray-600 text-white rounded-r-md font-semibold transition duration-300"
+              className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
             >
               Search
             </button>
           </div>
           <button
             onClick={showAdd}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300 w-full md:w-auto"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
           >
             Add Product
           </button>
         </div>
         <table className="w-full border-collapse border border-gray-300 rounded-lg overflow-hidden">
           <thead>
-            <tr className="bg-gradient-to-br from-gray-500 to-gray-600 text-white text-lg md:text-2xl">
-              <th className="px-2 md:px-6 py-4 text-center">Name</th>
-              <th className="px-2 md:px-6 py-4 text-center">Price</th>
-              <th className="px-2 md:px-6 py-4 text-center">Actions</th>
+            <tr className="bg-gradient-to-br from-gray-500 to-gray-600 text-white text-2xl">
+              <th className="px-6 py-4 text-center">Name</th>
+              <th className="px-6 py-4 text-center">Price</th>
+              <th className="px-6 py-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {searchResults.map((product, index) => (
               <tr key={index} className="bg-transparent">
-                <td className="px-2 md:px-6 py-4 text-center text-gray-800 text-sm md:text-xl">{product.name}</td>
-                <td className="px-2 md:px-6 py-4 text-center text-gray-800 text-sm md:text-xl">{product.price} Rs</td>
-                <td className="px-2 md:px-6 py-4 space-x-2 flex justify-center">
+                <td className="px-6 py-4 text-center text-gray-800 text-xl">{product.name}</td>
+                <td className="px-6 py-4 text-center text-gray-800 text-xl">{product.price} Rs</td>
+                <td className="px-6 py-4 space-x-2 flex justify-center">
                   <button
                     onClick={() => handleUpdateProduct(product)}
-                    className="bg-blue-600 text-white py-2 px-4 rounded-md font-semibold transition duration-300"
+                    className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold transition duration-300"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => handleDeleteProduct(product._id)}
-                    className="bg-gray-800 text-white py-2 px-4 rounded-md font-semibold transition duration-300"
+                    className="w-full bg-gray-800 text-white py-2 rounded-md font-semibold transition duration-300"
                   >
                     Delete
                   </button>
@@ -145,11 +145,11 @@ const Home = () => {
         </table>
       </div>
       {showAddProduct && (
-        <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center">
           <AddProduct 
-            onClose={toggleAddProduct}
-            setMessage={setMessage} 
-          />
+          onClose={toggleAddProduct}
+           setMessage={setMessage} 
+           />
         </div>
       )}
       {showUpdateProduct && (

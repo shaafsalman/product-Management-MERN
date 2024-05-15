@@ -35,22 +35,28 @@ const Home = () => {
   };
 
   const handleSearch = () => {
-    if (searchTerm === '') {
-      setSearchResults(products);
-    } else {
-      const results = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchResults(results);
-    }
-  };
-  const showAdd = () => {
-    setShowAddProduct(true);
+    const results = products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
   };
 
   const toggleAddProduct = () => {
     fetchProducts();
     setShowAddProduct(!showAddProduct);
+  };
+
+  const handleAdd = async (newProduct) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/products/add', newProduct);
+      setProducts([...products, response.data]);
+      setSearchResults([...products, response.data]);
+      setMessage({ Heading: 'Success', Message: 'Product added successfully!' });
+      toggleAddProduct();
+    } catch (error) {
+      console.error('Error adding product:', error);
+      setMessage({ Heading: 'Error', Message: 'Failed to add product' });
+    }
   };
 
   const handleUpdateProduct = (product) => {
@@ -73,10 +79,7 @@ const Home = () => {
       console.log('Deletion response:', response);
       setMessage({ Heading: 'Success', Message: 'Product deleted successfully!' });
       fetchProducts(); 
-
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       console.error('Error deleting product:', error);
       setMessage({ Heading: 'Error', Message: 'Failed to delete product' });
     }
@@ -106,7 +109,7 @@ const Home = () => {
             </button>
           </div>
           <button
-            onClick={showAdd}
+            onClick={() => setShowAddProduct(true)}
             className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300 w-full md:w-auto"
           >
             Add Product
@@ -148,6 +151,7 @@ const Home = () => {
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center z-50">
           <AddProduct 
             onClose={toggleAddProduct}
+            onAdd={handleAdd}
             setMessage={setMessage} 
           />
         </div>

@@ -11,9 +11,8 @@ const AddProduct = ({ onClose, setMessage, onProductAdded }) => {
       await axios.post('http://localhost:8080/api/products/add', { name, price });
       setMessage({ Heading: 'Success', Message: 'Product added successfully!' });
       onClose();
-    } 
-    catch (error)
-     {
+
+    } catch (error) {
       setMessage({ Heading: 'Error', Message: 'Product not added!' });
       console.error('Error adding product:', error);
     }
