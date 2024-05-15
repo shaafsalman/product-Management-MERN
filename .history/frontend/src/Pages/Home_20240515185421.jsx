@@ -65,15 +65,12 @@ const Home = () => {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      console.log(`Attempting to delete product with ID: ${productId}`);
-      const response = await axios.delete(`http://localhost:8080/api/products/delete/${productId}`);
-      console.log('Deletion response:', response);
+      await axios.delete(`http://localhost:8080/api/products/delete/${productId}`);
+      const updatedProducts = products.filter(product => product._id !== productId);
+      setProducts(updatedProducts);
+      setSearchResults(updatedProducts);
       setMessage({ Heading: 'Success', Message: 'Product deleted successfully!' });
-      fetchProducts(); 
-
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       console.error('Error deleting product:', error);
       setMessage({ Heading: 'Error', Message: 'Failed to delete product' });
     }

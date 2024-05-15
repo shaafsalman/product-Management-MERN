@@ -10,7 +10,7 @@ async function getProduct(req, res, next) {
     let product;
     try {
         product = await Product.findById(req.params.id);
-        if (!product) {
+        if (product == null) {
             console.log('Product not found');
             return res.status(404).json({ message: 'Cannot find product' });
         }
@@ -22,6 +22,7 @@ async function getProduct(req, res, next) {
     res.product = product;
     next();
 }
+
 
 
 

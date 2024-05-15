@@ -69,11 +69,8 @@ const Home = () => {
       const response = await axios.delete(`http://localhost:8080/api/products/delete/${productId}`);
       console.log('Deletion response:', response);
       setMessage({ Heading: 'Success', Message: 'Product deleted successfully!' });
-      fetchProducts(); 
-
-    } 
-    catch (error) 
-    {
+      fetchProducts(); // Fetch the updated product list after deletion
+    } catch (error) {
       console.error('Error deleting product:', error);
       setMessage({ Heading: 'Error', Message: 'Failed to delete product' });
     }

@@ -10,13 +10,10 @@ async function getProduct(req, res, next) {
     let product;
     try {
         product = await Product.findById(req.params.id);
-        if (!product) {
-            console.log('Product not found');
+        if (product == null) {
             return res.status(404).json({ message: 'Cannot find product' });
         }
-        console.log('Product found:', product);
     } catch (err) {
-        console.error('Error fetching product:', err.message);
         return res.status(500).json({ message: err.message });
     }
     res.product = product;
@@ -69,15 +66,13 @@ router.get('/:id', getProduct, (req, res) => {
     console.log("Request product with id");
 });
 
-// DELETE /products/delete/:id: Delete a product by ID
+// DELETE /products/:id: Delete a product by ID
 router.delete('/delete/:id', getProduct, async (req, res) => {
     console.log("Request to remove product");
     try {
-        await Product.deleteOne({ _id: res.product._id });
-        console.log('Product removed');
+        await res.product.remove();
         res.json({ message: 'Product deleted' });
     } catch (error) {
-        console.error('Error removing product:', error.message);
         res.status(500).json({ message: error.message });
     }
 });
@@ -104,6 +99,21 @@ router.put('/:id', getProduct, async (req, res) => {
 
 
 
+// Middleware function to retrieve product by ID
+async function getProduct(req, res, next) {
+    console.log("Request getter  products");
 
+    let product;
+    try {
+        product = await Product.findById(req.params.id);
+        if (product == null) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+    res.product = product;
+    next();
+}
 
 module.exports = router;
