@@ -95,14 +95,14 @@ const Home = () => {
             />
             <button
               onClick={handleSearch}
-              className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
+              className="px-4 py-2 bg-gray-600 text-white py-2 rounded-md font-semibold transition duration-300"
             >
               Search
             </button>
           </div>
           <button
             onClick={showAdd}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
+            className="px-4 py-2 bg-gray-600 text-white py-2 rounded-md font-semibold transition duration-300"
           >
             Add Product
           </button>

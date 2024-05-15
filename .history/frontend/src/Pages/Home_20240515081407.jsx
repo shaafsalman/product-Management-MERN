@@ -12,10 +12,11 @@ const Home = () => {
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [message, setMessage] = useState(null);
+  const [updateFlag, setUpdateFlag] = useState(false);  // State to track updates
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [updateFlag]);  // Fetch products whenever updateFlag changes
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,6 +62,7 @@ const Home = () => {
     );
     setProducts(updatedProducts);
     setSearchResults(updatedProducts);
+    setUpdateFlag(!updateFlag);  // Trigger update
   };
 
   const handleDeleteProduct = async (productId) => {
@@ -70,6 +72,7 @@ const Home = () => {
       setProducts(updatedProducts);
       setSearchResults(updatedProducts);
       setMessage({ Heading: 'Success', Message: 'Product deleted successfully!' });
+      setUpdateFlag(!updateFlag);  // Trigger update
     } catch (error) {
       console.error('Error deleting product:', error);
       setMessage({ Heading: 'Error', Message: 'Failed to delete product' });
@@ -95,14 +98,14 @@ const Home = () => {
             />
             <button
               onClick={handleSearch}
-              className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
+              className="px-4 py-2 bg-gray-600 text-white py-2 rounded-md font-semibold transition duration-300"
             >
               Search
             </button>
           </div>
           <button
             onClick={showAdd}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md font-semibold transition duration-300"
+            className="px-4 py-2 bg-gray-600 text-white py-2 rounded-md font-semibold transition duration-300"
           >
             Add Product
           </button>
