@@ -55,7 +55,7 @@ const Login = () => {
         {
         setSuccessMessage('Login successful');
         setShowMessage(true);
-        navigate('/offline-home');
+        navigate('/home');
       } 
       else 
       {
