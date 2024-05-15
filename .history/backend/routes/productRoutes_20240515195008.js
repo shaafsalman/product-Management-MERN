@@ -37,6 +37,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+
 router.post('/add', async (req, res) => {
     console.log("Request add product");
     console.log(req.body.name + " :  " + req.body.price);

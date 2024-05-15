@@ -5,20 +5,18 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
   const [name, setName] = useState(currentName);
   const [price, setPrice] = useState(currentPrice);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleUpdate = async (productId, updatedProduct) => {
     try {
-      const updatedProduct = { name, price };
-      const response = await axios.put(`http://localhost:8080/api/offlineProducts/${productId}`, updatedProduct);
-      onUpdate(productId, response.data);
-      setMessage({ Heading: 'Success', Message: 'Product updated successfully!' });
-      onClose();
-    } catch (error) 
-    {
+      const response = await axios.put(`http://localhost:8080/api/products/${productId}`, updatedProduct);
+      console.log('Update response:', response);
+      setMessage({ Heading: 'Success', Message: response.data.message });
+      fetchProducts(); 
+    } catch (error) {
       console.error('Error updating product:', error);
       setMessage({ Heading: 'Error', Message: 'Failed to update product' });
     }
   };
+  
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black bg-opacity-50">

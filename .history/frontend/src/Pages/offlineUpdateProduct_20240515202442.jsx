@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
 const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate, setMessage }) => {
   const [name, setName] = useState(currentName);
   const [price, setPrice] = useState(currentPrice);
@@ -9,14 +6,17 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
     e.preventDefault();
     try {
       const updatedProduct = { name, price };
-      const response = await axios.put(`http://localhost:8080/api/offlineProducts/${productId}`, updatedProduct);
-      onUpdate(productId, response.data);
-      setMessage({ Heading: 'Success', Message: 'Product updated successfully!' });
-      onClose();
-    } catch (error) 
-    {
+      const response = await axios.put(`http://localhost:8080/api/products/${productId}`, updatedProduct);
+      if (response.status === 200) {
+        onUpdate(productId, updatedProduct); 
+        setMessage({ Heading: 'Success', Message: response.data.message });
+        onClose();
+      } else {
+        throw new Error(response.data.message || 'Failed to update product');
+      }
+    } catch (error) {
       console.error('Error updating product:', error);
-      setMessage({ Heading: 'Error', Message: 'Failed to update product' });
+      setMessage({ Heading: 'Error', Message: error.message || 'Failed to update product' });
     }
   };
 

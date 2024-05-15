@@ -4,7 +4,7 @@ import Login from "./Pages/Login"
 import Signup from "./Pages/SighnUp"
 import NoPage from './Pages/NoPage';
 import Home from './Pages/Home';
-import OfflineHome from './Pages/offlineHome';
+import offlineHome from './Pages/offlineHome';
 
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/register" element={<Signup />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/offline-home" element={<OfflineHome/>} />
+            <Route path="/offline-home" element={<offlineHome/>} />
             <Route path="/*" element={<NoPage />} />
           </Routes>
         </div>

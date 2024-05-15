@@ -8,8 +8,10 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        console.log("Sending request to add product");
+        console.log(name + price+ {productId});
       const updatedProduct = { name, price };
-      const response = await axios.put(`http://localhost:8080/api/offlineProducts/${productId}`, updatedProduct);
+      const response = await axios.put(`http://localhost:8080/api/offlineProducts/update/${productId}`, updatedProduct);
       onUpdate(productId, response.data);
       setMessage({ Heading: 'Success', Message: 'Product updated successfully!' });
       onClose();

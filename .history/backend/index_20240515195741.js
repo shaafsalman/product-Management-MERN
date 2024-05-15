@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/offlineProducts', offlineProductRoutes);
+app.use('/api/offlineProducts', productRoutes);
 
 
 // Error handling middleware

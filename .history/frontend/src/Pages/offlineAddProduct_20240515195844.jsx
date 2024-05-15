@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate, setMessage }) => {
-  const [name, setName] = useState(currentName);
-  const [price, setPrice] = useState(currentPrice);
+const AddProduct = ({ onClose, setMessage, onProductAdded }) => {
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedProduct = { name, price };
-      const response = await axios.put(`http://localhost:8080/api/offlineProducts/${productId}`, updatedProduct);
-      onUpdate(productId, response.data);
-      setMessage({ Heading: 'Success', Message: 'Product updated successfully!' });
+      await axios.post('http://localhost:8080/api/products/add', { name, price });
+      setMessage({ Heading: 'Success', Message: 'Product added successfully!' });
       onClose();
-    } catch (error) 
-    {
-      console.error('Error updating product:', error);
-      setMessage({ Heading: 'Error', Message: 'Failed to update product' });
+    } 
+    catch (error)
+     {
+      setMessage({ Heading: 'Error', Message: 'Product not added!' });
+      console.error('Error adding product:', error);
     }
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black bg-opacity-50">
       <div className="max-w-md w-full p-6 shadow-lg bg-gradient-to-br from-gray-500 to-gray-600">
-        <h3 className="font-semibold mb-2 text-white text-2xl">Update Product</h3>
+        <h3 className="font-semibold mb-2 text-white text-2xl">Add Product</h3>
         <form onSubmit={handleSubmit} className="flex flex-col">
           <input
             type="text"
@@ -35,7 +34,7 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
           />
           <input
             type="number"
-            placeholder="Product Price"
+            placeholder="Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-md mb-2"
@@ -43,7 +42,7 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
           />
           <div className="flex justify-end">
             <button type="button" className="mr-2 px-4 py-2 bg-gray-300 rounded-md" onClick={onClose}>Cancel</button>
-            <button type="submit" className="w-full bg-white text-gray-600 py-2 rounded-md font-semibold hover:bg-gray-600 hover:text-white transition duration-300">Update</button>
+            <button type="submit" className="w-full bg-white text-gray-600 py-2 rounded-md font-semibold hover:bg-gray-600 hover:text-white transition duration-300">Add</button>
           </div>
         </form>
       </div>
@@ -51,4 +50,4 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
   );
 };
 
-export default UpdateProduct;
+export default AddProduct;

@@ -7,17 +7,11 @@ const UpdateProduct = ({ productId, currentName, currentPrice, onClose, onUpdate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const updatedProduct = { name, price };
-      const response = await axios.put(`http://localhost:8080/api/offlineProducts/${productId}`, updatedProduct);
-      onUpdate(productId, response.data);
-      setMessage({ Heading: 'Success', Message: 'Product updated successfully!' });
-      onClose();
-    } catch (error) 
-    {
-      console.error('Error updating product:', error);
-      setMessage({ Heading: 'Error', Message: 'Failed to update product' });
-    }
+    const updatedProduct = {
+      name: name,
+      price: price
+    };
+    onUpdate(productId, updatedProduct); // Call onUpdate function with updated product data
   };
 
   return (
